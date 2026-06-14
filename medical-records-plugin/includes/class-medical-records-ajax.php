@@ -9,8 +9,19 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $customer_id = intval($_POST['customer_id']);
@@ -90,8 +101,19 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $record_id = intval($_GET['record_id']);
@@ -118,8 +140,19 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $medical_record_id = intval($_POST['medical_record_id']);
@@ -163,8 +196,19 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $medical_record_id = intval($_GET['medical_record_id']);
@@ -204,8 +248,19 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $visit_id = intval($_GET['visit_id']);
@@ -246,6 +301,7 @@ class Medical_Records_Ajax {
             $existing_record = Medical_Records_DB::get_medical_record_by_customer($customer_id);
             
             if ($existing_record) {
+                // Update existing record
                 $data = array(
                     'blood_group' => $blood_group,
                     'special_diseases' => $special_diseases,
@@ -262,7 +318,36 @@ class Medical_Records_Ajax {
                     wp_send_json_error(array('message' => __('خطا در ثبت سوابق', 'medical-records')), 500);
                 }
             } else {
-                wp_send_json_error(array('message' => __('پرونده‌ای یافت نشد', 'medical-records')), 404);
+                // Create new record for patient (self-registration)
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $current_user = wp_get_current_user();
+                
+                // Find first available doctor or use customer's associated doctor
+                $default_doctor_id = $wpdb->get_var("SELECT id FROM {$staff_table} LIMIT 1");
+                
+                if (!$default_doctor_id) {
+                    wp_send_json_error(array('message' => __('پزشکی یافت نشد', 'medical-records')), 404);
+                }
+                
+                $record_id = Medical_Records_DB::create_medical_record(
+                    $customer_id,
+                    intval($default_doctor_id),
+                    $blood_group,
+                    $special_diseases,
+                    $age,
+                    $current_medications,
+                    $medical_files
+                );
+                
+                if ($record_id) {
+                    wp_send_json_success(array(
+                        'message' => __('پرونده با موفقیت ایجاد شد', 'medical-records'),
+                        'record_id' => $record_id
+                    ));
+                } else {
+                    wp_send_json_error(array('message' => __('خطا در ایجاد پرونده', 'medical-records')), 500);
+                }
             }
             
         } catch (Exception $e) {
@@ -315,8 +400,20 @@ class Medical_Records_Ajax {
         try {
             check_ajax_referer('mr_frontend_nonce', 'nonce');
             
-            if (!current_user_can('edit_posts')) {
-                wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+            // Allow both admin and users with edit_posts capability (doctors)
+            if (!current_user_can('edit_posts') && !current_user_can('manage_options')) {
+                // Check if user is a Bookly staff member
+                $current_user = wp_get_current_user();
+                global $wpdb;
+                $staff_table = $wpdb->prefix . 'bookly_staff';
+                $is_staff = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                    $current_user->ID
+                ));
+                
+                if ($is_staff == 0) {
+                    wp_send_json_error(array('message' => __('دسترسی غیرمجاز', 'medical-records')), 403);
+                }
             }
             
             $term = isset($_GET['term']) ? sanitize_text_field($_GET['term']) : '';

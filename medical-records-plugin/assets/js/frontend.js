@@ -391,7 +391,12 @@ jQuery(document).ready(function($) {
         $('#mr-patient-files-container').append(row);
     });
     
-    // Patient view - Submit medical history
+    // Patient view - Show request record form
+    $(document).on('click', '#mr-request-record-btn', function() {
+        $('#mr-request-form').slideToggle();
+    });
+    
+    // Patient view - Submit medical history (for creating record)
     $(document).on('click', '#mr-submit-medical-history', function() {
         var bloodGroup = $('[name="blood_group"]').val();
         var age = $('[name="age"]').val();

@@ -37,13 +37,41 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // Show create record form
+    // Show create record form - Simplified to just show confirmation modal
     $(document).on('click', '.mr-create-record-btn', function() {
-        $('#mr-create-record-form').slideDown();
-        initPatientSelect2();
-        $('html, body').animate({
-            scrollTop: $('#mr-create-record-form').offset().top - 100
-        }, 500);
+        var patientId = $(this).closest('tr').data('patient-id');
+        var patientName = $(this).closest('tr').find('td:nth-child(2)').text();
+        
+        if (confirm('آیا مطمئن هستید که می‌خواهید برای بیمار "' + patientName + '" پرونده ایجاد کنید؟')) {
+            // Auto-create record with minimal data
+            $.ajax({
+                url: mrAdminAjax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'mr_create_medical_record',
+                    nonce: mrAdminAjax.nonce,
+                    customer_id: patientId,
+                    doctor_id: 1, // Default to first doctor, can be changed later
+                    blood_group: '',
+                    age: 0,
+                    special_diseases: '',
+                    current_medications: ''
+                },
+                success: function(response) {
+                    if (response.success) {
+                        showToast(response.data.message, 'success');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        showToast(response.data.message || 'خطایی رخ داده است', 'error');
+                    }
+                },
+                error: function() {
+                    showToast('خطای سرور', 'error');
+                }
+            });
+        }
     });
     
     // Initialize create record

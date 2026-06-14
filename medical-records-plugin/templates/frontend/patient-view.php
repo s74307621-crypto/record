@@ -155,6 +155,68 @@
             <p><?php _e('هنوز پرونده پزشکی برای شما ایجاد نشده است.', 'medical-records'); ?></p>
             <p><?php _e('برای ایجاد پرونده با پزشک یا مدیر سیستم تماس بگیرید.', 'medical-records'); ?></p>
         </div>
+        
+        <!-- Button to request medical record creation -->
+        <div style="margin-top: 20px;">
+            <button class="button button-primary" id="mr-request-record-btn">
+                <?php _e('درخواست ایجاد پرونده', 'medical-records'); ?>
+            </button>
+        </div>
+        
+        <div id="mr-request-form" style="display:none; margin-top: 20px;" class="mr-card">
+            <h3><?php _e('ثبت سوابق پزشکی اولیه', 'medical-records'); ?></h3>
+            
+            <div class="mr-form-row">
+                <label><?php _e('گروه خونی:', 'medical-records'); ?></label>
+                <select name="blood_group" class="mr-blood-group">
+                    <option value=""><?php _e('انتخاب کنید', 'medical-records'); ?></option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="mr-form-row">
+                <label><?php _e('سن:', 'medical-records'); ?></label>
+                <input type="number" name="age" class="regular-text" min="0" max="150">
+            </div>
+            
+            <div class="mr-form-row">
+                <label><?php _e('بیماری‌های خاص:', 'medical-records'); ?></label>
+                <div class="mr-checkbox-group">
+                    <label><input type="checkbox" name="special_diseases[]" value="دیابت"> <?php _e('دیابت', 'medical-records'); ?></label>
+                    <label><input type="checkbox" name="special_diseases[]" value="فشار خون"> <?php _e('فشار خون', 'medical-records'); ?></label>
+                    <label><input type="checkbox" name="special_diseases[]" value="بیماری قلبی"> <?php _e('بیماری قلبی', 'medical-records'); ?></label>
+                    <label><input type="checkbox" name="special_diseases[]" value="آسم"> <?php _e('آسم', 'medical-records'); ?></label>
+                    <label><input type="checkbox" name="special_diseases[]" value="تیروئید"> <?php _e('تیروئید', 'medical-records'); ?></label>
+                    <label><input type="checkbox" name="special_diseases[]" value="بیماری کلیوی"> <?php _e('بیماری کلیوی', 'medical-records'); ?></label>
+                </div>
+                <textarea name="other_diseases" class="large-text" rows="2" placeholder="<?php _e('سایر بیماری‌ها', 'medical-records'); ?>"></textarea>
+            </div>
+            
+            <div class="mr-form-row">
+                <label><?php _e('داروهای مصرفی:', 'medical-records'); ?></label>
+                <div id="mr-patient-medications-container">
+                    <div class="mr-medication-row">
+                        <input type="text" name="medication_name[]" placeholder="<?php _e('نام دارو', 'medical-records'); ?>" class="regular-text">
+                        <input type="text" name="medication_usage[]" placeholder="<?php _e('نحوه مصرف', 'medical-records'); ?>" class="regular-text">
+                        <button class="button mr-remove-medication">×</button>
+                    </div>
+                </div>
+                <button class="button" id="mr-add-patient-medication"><?php _e('+ افزودن دارو', 'medical-records'); ?></button>
+            </div>
+            
+            <div class="mr-form-actions">
+                <button class="button button-primary" id="mr-submit-medical-history">
+                    <?php _e('ثبت اطلاعات', 'medical-records'); ?>
+                </button>
+            </div>
+        </div>
     <?php endif; ?>
     
     <?php endif; ?>
