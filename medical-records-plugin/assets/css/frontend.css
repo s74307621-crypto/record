@@ -1,0 +1,224 @@
+.mr-doctor-container,
+.mr-patient-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.mr-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.mr-form-row {
+    margin-bottom: 15px;
+}
+
+.mr-form-row label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mr-form-row input[type="text"],
+.mr-form-row input[type="number"],
+.mr-form-row select,
+.mr-form-row textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.mr-form-actions {
+    margin-top: 20px;
+}
+
+.mr-form-actions button {
+    margin-right: 10px;
+}
+
+.mr-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.mr-filter-select {
+    min-width: 150px;
+}
+
+.mr-visits-table {
+    overflow-x: auto;
+}
+
+.mr-modal {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mr-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.mr-close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.mr-close-modal:hover {
+    color: #000;
+}
+
+.mr-toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 100001;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-size: 16px;
+}
+
+.mr-toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.mr-toast.success {
+    background-color: #4CAF50;
+}
+
+.mr-toast.error {
+    background-color: #f44336;
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+.mr-medication-row,
+.mr-file-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.mr-medication-row input,
+.mr-file-row input {
+    flex: 1;
+}
+
+.mr-remove-medication,
+.mr-remove-file {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mr-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.mr-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: normal;
+}
+
+.mr-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #f5c6cb;
+}
+
+.mr-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #bee5eb;
+}
+
+.wp-list-table {
+    margin-top: 15px;
+}
+
+#mr-create-record-form,
+#mr-full-create-form,
+#mr-view-record-section,
+#mr-visit-form-wrapper {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.mr-selected-patient-info {
+    background: #f0f7ff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.mr-back-to-list {
+    margin-bottom: 15px;
+}
+
+.select2-container {
+    z-index: 10000 !important;
+}
+
+.persian-datepicker-container {
+    z-index: 100000 !important;
+}
