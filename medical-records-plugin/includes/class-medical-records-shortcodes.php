@@ -8,7 +8,24 @@ class Medical_Records_Shortcodes {
     public static function doctor_shortcode($atts) {
         $atts = shortcode_atts(array(), $atts);
         
-        if (!current_user_can('edit_posts')) {
+        // Check if user is admin or has edit_posts capability OR is a Bookly staff member
+        $can_access = current_user_can('edit_posts') || current_user_can('manage_options');
+        
+        if (!$can_access) {
+            $current_user = wp_get_current_user();
+            global $wpdb;
+            $staff_table = $wpdb->prefix . 'bookly_staff';
+            $is_staff = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM {$staff_table} WHERE wp_user_id = %d",
+                $current_user->ID
+            ));
+            
+            if ($is_staff > 0) {
+                $can_access = true;
+            }
+        }
+        
+        if (!$can_access) {
             return '<div class="mr-error">' . __('شما دسترسی مشاهده این صفحه را ندارید.', 'medical-records') . '</div>';
         }
         
