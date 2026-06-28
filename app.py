@@ -12,6 +12,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+print(BASE_DIR)
+print(TEMPLATES_DIR)
+print(os.path.exists(TEMPLATES_DIR))
 def get_db_connection():
     """اتصال به دیتابیس"""
     try:
