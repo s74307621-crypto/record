@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل ادمین - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
+            <nav><ul class="nav-menu">
+                <li><a href="/" class="nav-link">خانه</a></li>
+                <li><a href="/shop" class="nav-link">فروشگاه</a></li>
+                <li><a href="/articles" class="nav-link">مقالات</a></li>
+            </ul></nav>
+            <div class="auth-buttons"><button onclick="logout()" class="btn btn-outline">خروج</button></div>
+        </div>
+    </header>
+
+    <section class="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <h1 class="section-title">⚙️ پنل مدیریت</h1>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-section="productsSection">محصولات</button>
+                <button class="admin-tab" data-section="articlesSection">مقالات</button>
+            </div>
+            
+            <div id="productsSection" class="admin-section">
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>عنوان</th>
+                                <th>دسته‌بندی</th>
+                                <th>قیمت (تومان)</th>
+                                <th>موجودی</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="articlesSection" class="admin-section" style="display:none">
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>عنوان</th>
+                                <th>نویسنده</th>
+                                <th>دسته‌بندی</th>
+                                <th>بازدید</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><div class="footer-bottom"><p>© ۱۴۰۳ نرسیمد - پنل مدیریت</p></div></div></footer>
+    <div class="toast-container"></div>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

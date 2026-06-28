@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🏥</div>
+                <span>نرسیمد</span>
+            </a>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link {{HOME_ACTIVE}}">خانه</a></li>
+                    <li><a href="/shop" class="nav-link {{SHOP_ACTIVE}}">فروشگاه</a></li>
+                    <li><a href="/articles" class="nav-link {{ARTICLES_ACTIVE}}">مقالات</a></li>
+                    <li><a href="/about" class="nav-link {{ABOUT_ACTIVE}}">درباره ما</a></li>
+                    <li><a href="/contact" class="nav-link {{CONTACT_ACTIVE}}">تماس با ما</a></li>
+                    <li><a href="/team" class="nav-link {{TEAM_ACTIVE}}">اعضای تیم</a></li>
+                </ul>
+            </nav>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="cart-icon-wrapper" onclick="window.location.href='/cart'">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-badge" style="display: none;">0</span>
+                </div>
+                
+                <div class="auth-buttons">
+                    <a href="/login" class="btn btn-outline">ورود</a>
+                    <a href="/register" class="btn btn-primary">ثبت نام</a>
+                </div>
+            </div>
+        </div>
+    </header>
