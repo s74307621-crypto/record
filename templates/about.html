@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره ما - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .about-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .about-content h2 {
+            color: #396cf0;
+            margin-bottom: 1.5rem;
+        }
+        .about-content p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .mv-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-right: 4px solid #396cf0;
+        }
+        .mv-card h3 {
+            color: #396cf0;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>نرسیمد</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">خانه</a></li>
+                    <li><a href="/articles.html">مقالات</a></li>
+                    <li><a href="/store.html">فروشگاه</a></li>
+                    <li><a href="/about.html">درباره ما</a></li>
+                    <li><a href="/contact.html">تماس با ما</a></li>
+                    <li><a href="/team.html">اعضای تیم</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="/login.html" class="btn-login">ورود</a>
+                <a href="/register.html" class="btn-register">ثبت نام</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="about-content">
+            <h2>درباره نرسیمد</h2>
+            <p>نرسیمد یک پلتفرم آموزشی تخصصی در حوزه پزشکی و امداد است که با هدف ارائه آموزش‌های باکیفیت و قابل دسترس برای تمامی علاقه‌مندان به علوم پزشکی تأسیس شده است.</p>
+            
+            <p>ما معتقدیم که دانش پزشکی نباید محدود به کادر درمان باشد، بلکه همه افراد جامعه باید با اصول اولیه پزشکی و امداد آشنا باشند تا بتوانند در مواقع ضروری جان خود و دیگران را نجات دهند.</p>
+
+            <div class="mission-vision">
+                <div class="mv-card">
+                    <h3>ماموریت ما</h3>
+                    <p>ارائه آموزش‌های پزشکی باکیفیت و قابل فهم برای همه افراد جامعه، از دانشجویان پزشکی تا مردم عادی که به یادگیری امداد و کمک‌های اولیه علاقه دارند.</p>
+                </div>
+                <div class="mv-card">
+                    <h3>چشم‌انداز ما</h3>
+                    <p>تبدیل شدن به بزرگترین مرجع آموزش پزشکی آنلاین در ایران و افزایش سطح آگاهی عمومی در زمینه‌های پزشکی و امدادی.</p>
+                </div>
+            </div>
+
+            <h3 style="color: #396cf0; margin-top: 2rem;">خدمات ما</h3>
+            <ul style="line-height: 2; margin-right: 2rem;">
+                <li>دوره‌های آموزشی پزشکی با پشتیبانی هوشمند</li>
+                <li>فروش انواع کتاب‌های معتبر پزشکی</li>
+                <li>پادکست‌های آموزشی در زمینه‌های مختلف پزشکی</li>
+                <li>آموزش‌های امداد از راه دور برای افراد عادی</li>
+                <li>دسترسی دائم به محتوای آموزشی خریداری شده</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>تمامی حقوق برای نرسیمد محفوظ است © ۱۴۰۳</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
