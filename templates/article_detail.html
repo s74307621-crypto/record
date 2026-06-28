@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container nav-container">
             <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
@@ -22,25 +23,116 @@
         </div>
     </header>
 
-    <article class="article-detail">
-        <div class="container article-detail-container">
-            <img src="{{IMAGE_URL}}" alt="{{TITLE}}" class="article-detail-image">
-            <header class="article-detail-header">
-                <h1 class="article-detail-title">{{TITLE}}</h1>
-                <div class="article-detail-meta">
-                    <span>✍️ نویسنده: {{AUTHOR}}</span>
-                    <span>📅 تاریخ: {{CREATED_AT}}</span>
-                    <span>👁️ بازدید: {{VIEWS}}</span>
-                    <span>📂 دسته: {{CATEGORY}}</span>
+    <article class="article-detail-page">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="/">خانه</a> / 
+                <a href="/articles">مقالات</a> / 
+                <span>{{TITLE}}</span>
+            </nav>
+            
+            <div class="article-detail-wrapper">
+                <header class="article-header">
+                    <span class="article-category-tag">{{CATEGORY}}</span>
+                    <h1 class="article-title-main">{{TITLE}}</h1>
+                    
+                    <div class="article-meta">
+                        <div class="author-box">
+                            <div class="author-avatar">{{AUTHOR_INITIAL}}</div>
+                            <div class="author-info">
+                                <strong>{{AUTHOR}}</strong>
+                                <span>نویسنده مقاله</span>
+                            </div>
+                        </div>
+                        <div class="meta-details">
+                            <span>📅 {{PUBLISHED_DATE}}</span>
+                            <span>👁️ {{VIEWS}} بازدید</span>
+                            <span>⏱️ ۵ دقیقه مطالعه</span>
+                        </div>
+                    </div>
+                </header>
+                
+                <figure class="article-hero-image">
+                    <img src="{{IMAGE_URL}}" alt="{{TITLE}}">
+                    <figcaption>{{TITLE}}</figcaption>
+                </figure>
+                
+                <div class="article-content-body">
+                    <div class="article-excerpt-box">
+                        <p>{{EXCERPT}}</p>
+                    </div>
+                    
+                    <div class="article-main-content">
+                        {{CONTENT}}
+                    </div>
+                    
+                    <div class="article-tags">
+                        <span>برچسب‌ها:</span>
+                        <a href="#" class="tag">پزشکی</a>
+                        <a href="#" class="tag">سلامت</a>
+                        <a href="#" class="tag">{{CATEGORY}}</a>
+                    </div>
+                    
+                    <div class="article-share-block">
+                        <span>اشتراک‌گذاری:</span>
+                        <div class="share-buttons">
+                            <button class="share-btn" title="تلگرام">📱</button>
+                            <button class="share-btn" title="توییتر">🐦</button>
+                            <button class="share-btn" title="لینکدین">💼</button>
+                            <button class="share-btn" title="کپی لینک">🔗</button>
+                        </div>
+                    </div>
                 </div>
-            </header>
-            <div class="article-detail-content">
-                {{CONTENT}}
+                
+                <!-- Author Bio -->
+                <aside class="author-bio-box">
+                    <div class="author-avatar-lg">{{AUTHOR_INITIAL}}</div>
+                    <div class="bio-content">
+                        <h3>{{AUTHOR}}</h3>
+                        <p>متخصص و نویسنده مقالات پزشکی با بیش از ۱۰ سال تجربه در حوزه آموزش پزشکی</p>
+                        <div class="author-socials">
+                            <a href="#">📧 ایمیل</a>
+                            <a href="#">🔗 وبسایت</a>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Related Articles -->
+                <section class="related-articles-section">
+                    <h3 class="section-subtitle">مقالات مرتبط</h3>
+                    <div class="articles-grid" id="relatedArticles"></div>
+                </section>
+                
+                <!-- Comments Section -->
+                <section class="comments-section">
+                    <h3 class="section-subtitle">نظرات کاربران ({{COMMENTS_COUNT}})</h3>
+                    
+                    <div class="comments-list" id="commentsList">
+                        <!-- نظرات از طریق JS بارگذاری می‌شوند -->
+                    </div>
+                    
+                    <div class="add-comment-form">
+                        <h4>دیدگاه خود را بنویسید</h4>
+                        <form>
+                            <input type="text" placeholder="نام شما" required>
+                            <textarea placeholder="دیدگاه شما..." rows="4" required></textarea>
+                            <button type="submit" class="btn btn-primary">ارسال دیدگاه</button>
+                        </form>
+                    </div>
+                </section>
             </div>
         </div>
     </article>
 
-    <footer class="footer"><div class="container"><div class="footer-bottom"><p>© ۱۴۰۳ نرسیمد</p></div></div></footer>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© ۱۴۰۳ نرسیمد - تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+    
     <script src="/static/js/main.js"></script>
 </body>
 </html>
