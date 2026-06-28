@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0;">
+    <div class="container">
+        <h1>{{ book.title }}</h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="product-detail">
+            <div>
+                {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="product-image">
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <h1 style="color: var(--primary-color);">{{ book.title }}</h1>
+                <p style="line-height: 1.8;">{{ book.description }}</p>
+                <div class="product-meta">
+                    <div>
+                        <strong>نویسنده:</strong>
+                        <span>{{ book.author }}</span>
+                    </div>
+                    <div>
+                        <strong>قیمت:</strong>
+                        <span style="color: var(--primary-color); font-size: 1.5rem;">{{ book.price }} تومان</span>
+                    </div>
+                    <div>
+                        <strong>موجودی:</strong>
+                        <span>{{ book.stock }} عدد</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">افزودن به سبد خرید</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}پروفایل کاربری{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0;">
+    <div class="container">
+        <h1>پروفایل کاربری</h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="contact-form">
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">اطلاعات حساب کاربری</h2>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="font-weight: bold;">نام کاربری:</label>
+                <p>{{ user.username }}</p>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="font-weight: bold;">ایمیل:</label>
+                <p>{{ user.email }}</p>
+            </div>
+            {% if user.phone %}
+            <div style="margin-bottom: 1.5rem;">
+                <label style="font-weight: bold;">شماره تماس:</label>
+                <p>{{ user.phone }}</p>
+            </div>
+            {% endif %}
+            <div style="margin-bottom: 1.5rem;">
+                <label style="font-weight: bold;">تاریخ عضویت:</label>
+                <p>{{ user.date_joined|date:"Y/m/d" }}</p>
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-outline" style="display: inline-block; margin-top: 1rem;">خروج از حساب</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

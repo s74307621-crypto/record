@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}مقالات پزشکی{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0;">
+    <div class="container">
+        <h1>مقالات پزشکی</h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="cards-grid">
+            {% for article in articles %}
+            <div class="card">
+                {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="card-image">
+                {% endif %}
+                <div class="card-content">
+                    <h3 class="card-title">{{ article.title }}</h3>
+                    <p class="card-text">{{ article.excerpt|default:article.content|truncatewords:20 }}</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">نویسنده: {{ article.author.username }} | {{ article.created_at|date:"Y/m/d" }}</p>
+                    <a href="{% url 'article_detail' article.slug %}" class="btn btn-primary">ادامه مطلب</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>هیچ مقاله‌ای یافت نشد.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
