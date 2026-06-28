@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}کتاب‌های پزشکی{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0;">
+    <div class="container">
+        <h1>کتاب‌های پزشکی</h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="cards-grid">
+            {% for book in books %}
+            <div class="card">
+                {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="card-image">
+                {% endif %}
+                <div class="card-content">
+                    <h3 class="card-title">{{ book.title }}</h3>
+                    <p class="card-text">نویسنده: {{ book.author }}</p>
+                    <div class="card-price">{{ book.price }} تومان</div>
+                    <a href="{% url 'book_detail' book.slug %}" class="btn btn-primary">خرید کتاب</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>هیچ کتابی یافت نشد.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

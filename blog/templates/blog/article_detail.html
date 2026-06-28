@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding: 3rem 0;">
+    <div class="container">
+        <h1>{{ article.title }}</h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="article-content">
+            {% if article.image %}
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" style="width: 100%; border-radius: 10px; margin-bottom: 2rem;">
+            {% endif %}
+            <div style="margin-bottom: 2rem; padding: 1rem; background: var(--secondary-color); border-radius: 5px;">
+                <span><strong>نویسنده:</strong> {{ article.author.username }}</span>
+                <span style="margin-right: 2rem;"><strong>تاریخ انتشار:</strong> {{ article.created_at|date:"Y/m/d" }}</span>
+                <span style="margin-right: 2rem;"><strong>دسته‌بندی:</strong> {{ article.category.name }}</span>
+            </div>
+            <div style="line-height: 1.8; font-size: 1.1rem;">
+                {{ article.content|linebreaks }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
