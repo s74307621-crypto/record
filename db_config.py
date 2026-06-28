@@ -1,15 +1,14 @@
-# تنظیمات دیتابیس PostgreSQL
+# db_config.py - تنظیمات اتصال به PostgreSQL
+# لطفاً پسورد دیتابیس خود را در خط زیر وارد کنید
+
 DB_CONFIG = {
     'host': 'localhost',
+    'port': 5432,
     'database': 'nursimed_db',
     'user': 'postgres',
-    'password': 'your_password',
-    'port': '5432'
+    'password': '1'  # <--- رمز عبور پستگرس خود را اینجا بنویسید
 }
 
-# برای تغییر مشخصات دیتابیس، مقادیر بالا را عوض کنید
-# host: آدرس سرور دیتابیس (اگر لوکال است localhost بگذارید)
-# database: نام دیتابیسی که ساختید
-# user: نام کاربری پستگرس
-# password: رمز عبور شما
-# port: پورت پیش‌فرض پستگرس 5432 است
+# مشخصات اکانت ادمین پیش‌فرض
+ADMIN_EMAIL = "a@gmail.com"
+ADMIN_PASS = "1234"

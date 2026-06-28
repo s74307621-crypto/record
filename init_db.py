@@ -34,7 +34,7 @@ def init_db():
                 id SERIAL PRIMARY KEY,
                 username VARCHAR(100) NOT NULL UNIQUE,
                 email VARCHAR(255) NOT NULL UNIQUE,
-                password_hash VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
                 is_admin BOOLEAN DEFAULT FALSE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -136,7 +136,7 @@ def init_db():
         # ایجاد اکانت ادمین
         admin_hash = hashlib.sha256(ADMIN_PASS.encode()).hexdigest()
         cur.execute("""
-            INSERT INTO users (username, email, password_hash, is_admin)
+            INSERT INTO users (username, email, password, is_admin)
             VALUES (%s, %s, %s, %s)
             ON CONFLICT (email) DO NOTHING
         """, ('admin', ADMIN_EMAIL, admin_hash, True))

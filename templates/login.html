@@ -7,62 +7,45 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h1>نرسیمد</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/">خانه</a></li>
-                    <li><a href="/articles.html">مقالات</a></li>
-                    <li><a href="/store.html">فروشگاه</a></li>
-                    <li><a href="/about.html">درباره ما</a></li>
-                    <li><a href="/contact.html">تماس با ما</a></li>
-                    <li><a href="/team.html">اعضای تیم</a></li>
-                </ul>
-            </nav>
-            <div class="auth-buttons">
-                <a href="/login.html" class="btn-login">ورود</a>
-                <a href="/register.html" class="btn-register">ثبت نام</a>
-            </div>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
+            <nav><ul class="nav-menu">
+                <li><a href="/" class="nav-link">خانه</a></li>
+                <li><a href="/shop" class="nav-link">فروشگاه</a></li>
+                <li><a href="/articles" class="nav-link">مقالات</a></li>
+            </ul></nav>
         </div>
     </header>
 
-    <main>
-        <div class="form-container">
-            <h2 style="text-align: center; color: #396cf0; margin-bottom: 2rem;">ورود به حساب کاربری</h2>
-            <form id="loginForm" onsubmit="return validateForm('loginForm')">
-                <div class="form-group">
-                    <label for="username">نام کاربری یا ایمیل *</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">رمز عبور *</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="form-group" style="text-align: left;">
-                    <a href="#" style="color: #396cf0; font-size: 0.9rem;">رمز عبور را فراموش کرده‌اید؟</a>
-                </div>
-
-                <button type="submit" class="btn-submit">ورود</button>
-            </form>
-
-            <p style="text-align: center; margin-top: 1.5rem; color: #666;">
-                حساب کاربری ندارید؟ 
-                <a href="/register.html" style="color: #396cf0; text-decoration: none;">ثبت نام کنید</a>
-            </p>
-        </div>
-    </main>
-
-    <footer>
+    <section class="form-section">
         <div class="container">
-            <p>تمامی حقوق برای نرسیمد محفوظ است © ۱۴۰۳</p>
+            <div class="form-container">
+                <h2 class="form-title">🔐 ورود به حساب</h2>
+                <p class="form-subtitle">خوش آمدید! لطفاً وارد شوید</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">ایمیل</label>
+                        <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">رمز عبور</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary form-btn">ورود به حساب</button>
+                </form>
+                
+                <div class="form-footer">
+                    حساب کاربری ندارید؟ <a href="/register">ثبت نام کنید</a>
+                </div>
+            </div>
         </div>
-    </footer>
+    </section>
 
+    <div class="toast-container"></div>
     <script src="/static/js/main.js"></script>
 </body>
 </html>
