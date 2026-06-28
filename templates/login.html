@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>نرسیمد</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">خانه</a></li>
+                    <li><a href="/articles.html">مقالات</a></li>
+                    <li><a href="/store.html">فروشگاه</a></li>
+                    <li><a href="/about.html">درباره ما</a></li>
+                    <li><a href="/contact.html">تماس با ما</a></li>
+                    <li><a href="/team.html">اعضای تیم</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="/login.html" class="btn-login">ورود</a>
+                <a href="/register.html" class="btn-register">ثبت نام</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2 style="text-align: center; color: #396cf0; margin-bottom: 2rem;">ورود به حساب کاربری</h2>
+            <form id="loginForm" onsubmit="return validateForm('loginForm')">
+                <div class="form-group">
+                    <label for="username">نام کاربری یا ایمیل *</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">رمز عبور *</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group" style="text-align: left;">
+                    <a href="#" style="color: #396cf0; font-size: 0.9rem;">رمز عبور را فراموش کرده‌اید؟</a>
+                </div>
+
+                <button type="submit" class="btn-submit">ورود</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+                حساب کاربری ندارید؟ 
+                <a href="/register.html" style="color: #396cf0; text-decoration: none;">ثبت نام کنید</a>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>تمامی حقوق برای نرسیمد محفوظ است © ۱۴۰۳</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

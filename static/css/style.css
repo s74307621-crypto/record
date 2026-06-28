@@ -1,14 +1,4 @@
-:root {
-    --primary-color: #396cf0;
-    --primary-dark: #2a50c9;
-    --secondary-color: #f8f9fa;
-    --text-color: #333;
-    --text-light: #666;
-    --white: #ffffff;
-    --border-color: #e0e0e0;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-}
+/* استایل‌های اصلی سایت نرسیمد */
 
 * {
     margin: 0;
@@ -17,10 +7,10 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Tahoma', 'Segoe UI', sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--white);
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 .container {
@@ -29,253 +19,204 @@ body {
     padding: 0 20px;
 }
 
-/* Header */
+/* هدر */
 header {
-    background-color: var(--white);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: #396cf0;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.navbar {
+header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    font-weight: bold;
+.logo h1 {
+    font-size: 1.8rem;
 }
 
-.logo img {
-    height: 40px;
-    width: auto;
-}
-
-.nav-links {
-    display: flex;
+nav ul {
     list-style: none;
-    gap: 2rem;
-    align-items: center;
+    display: flex;
+    gap: 20px;
 }
 
-.nav-links a {
+nav a {
+    color: white;
     text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: color 0.3s;
+    transition: opacity 0.3s;
 }
 
-.nav-links a:hover {
-    color: var(--primary-color);
+nav a:hover {
+    opacity: 0.8;
 }
 
-.btn {
-    padding: 0.75rem 1.5rem;
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-login, .btn-register {
+    padding: 8px 16px;
     border-radius: 5px;
     text-decoration: none;
-    font-weight: 600;
+    font-size: 0.9rem;
     transition: all 0.3s;
-    display: inline-block;
-    border: none;
-    cursor: pointer;
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: var(--white);
+.btn-login {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-dark);
+.btn-login:hover {
+    background-color: white;
+    color: #396cf0;
 }
 
-.btn-outline {
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    background: transparent;
+.btn-register {
+    background-color: white;
+    color: #396cf0;
 }
 
-.btn-outline:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
+.btn-register:hover {
+    background-color: #f0f0f0;
 }
 
-/* Hero Section */
+/* بخش اصلی */
+main {
+    padding: 2rem 0;
+}
+
 .hero {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--white);
-    padding: 5rem 0;
+    background: linear-gradient(135deg, #396cf0, #2a50d0);
+    color: white;
     text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
 }
 
-.hero h1 {
-    font-size: 3rem;
+.hero h2 {
+    font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
 .hero p {
     font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    opacity: 0.9;
+    margin-bottom: 2rem;
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* Sections */
-section {
-    padding: 4rem 0;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.section-title h2 {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.section-title p {
-    color: var(--text-light);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Cards Grid */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.card {
-    background: var(--white);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-
-.card-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-content {
-    padding: 1.5rem;
-}
-
-.card-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.card-text {
-    color: var(--text-light);
-    margin-bottom: 1rem;
-}
-
-.card-price {
-    font-size: 1.5rem;
+.btn-primary {
+    background-color: white;
+    color: #396cf0;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+    display: inline-block;
+    transition: all 0.3s;
 }
 
-/* Features */
-.features {
-    background-color: var(--secondary-color);
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.feature-card {
+/* خدمات */
+.services {
+    margin-bottom: 2rem;
+}
+
+.services h3 {
     text-align: center;
-    padding: 2rem;
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+    color: #396cf0;
 }
 
-.feature-icon {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.feature-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-/* About Page */
-.about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.about-image {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-/* Team */
-.team-grid {
+.services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 20px;
 }
 
-.team-member {
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     text-align: center;
-    padding: 2rem;
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
 }
 
-.team-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h4 {
+    color: #396cf0;
     margin-bottom: 1rem;
-    border: 4px solid var(--primary-color);
 }
 
-/* Contact Form */
-.contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--white);
+/* مقالات */
+.latest-articles {
+    margin-bottom: 2rem;
+}
+
+.latest-articles h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #396cf0;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.article-card h4 {
+    color: #396cf0;
+    margin-bottom: 1rem;
+}
+
+.article-card a {
+    color: #396cf0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.article-card a:hover {
+    text-decoration: underline;
+}
+
+/* فوتر */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* فرم‌ها */
+.form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    background: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .form-group {
@@ -285,177 +226,69 @@ section {
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--text-color);
+    color: #333;
 }
 
-.form-control {
+.form-group input,
+.form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid var(--border-color);
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.btn-submit {
+    background-color: #396cf0;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-/* Auth Forms */
-.auth-container {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-}
-
-.auth-box {
-    background: var(--white);
-    padding: 3rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     width: 100%;
-    max-width: 400px;
+    transition: background-color 0.3s;
 }
 
-.auth-box h2 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 2rem;
+.btn-submit:hover {
+    background-color: #2a50d0;
 }
 
-/* Footer */
-footer {
-    background-color: #1a1a2e;
-    color: var(--white);
-    padding: 3rem 0 1rem;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.footer-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.footer-section ul {
-    list-style: none;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-    color: var(--white);
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-}
-
-.footer-section a:hover {
-    opacity: 1;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    opacity: 0.7;
-}
-
-/* Error Pages */
+/* صفحات خطا */
 .error-page {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--white);
+    padding: 4rem 2rem;
 }
 
-.error-code {
-    font-size: 8rem;
-    font-weight: bold;
+.error-page h1 {
+    font-size: 4rem;
+    color: #396cf0;
     margin-bottom: 1rem;
 }
 
-.error-message {
-    font-size: 1.5rem;
+.error-page p {
+    font-size: 1.2rem;
     margin-bottom: 2rem;
 }
 
-/* Product Detail */
-.product-detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 2rem;
-}
-
-.product-image {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.product-info h1 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.product-meta {
-    display: flex;
-    gap: 2rem;
-    margin: 1.5rem 0;
-    padding: 1rem 0;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-/* Article Detail */
-.article-content {
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-
-.article-content p {
-    margin-bottom: 1.5rem;
-}
-
-.article-content img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin: 2rem 0;
-}
-
-/* Responsive */
+/* ریسپانسیو */
 @media (max-width: 768px) {
-    .nav-links {
+    header .container {
+        flex-direction: column;
         gap: 1rem;
-        font-size: 0.9rem;
     }
     
-    .hero h1 {
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .hero h2 {
         font-size: 2rem;
-    }
-    
-    .about-content,
-    .product-detail {
-        grid-template-columns: 1fr;
-    }
-    
-    .cards-grid {
-        grid-template-columns: 1fr;
     }
 }

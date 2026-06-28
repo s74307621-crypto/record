@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات محصول - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .product-detail {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .product-image-large {
+            height: 400px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        .product-info-large h1 {
+            color: #396cf0;
+            margin-bottom: 1rem;
+        }
+        .product-meta {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .product-price-large {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .product-description {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .btn-add-cart {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #396cf0;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-add-cart:hover {
+            background-color: #2a50d0;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #396cf0;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>نرسیمد</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">خانه</a></li>
+                    <li><a href="/articles.html">مقالات</a></li>
+                    <li><a href="/store.html">فروشگاه</a></li>
+                    <li><a href="/about.html">درباره ما</a></li>
+                    <li><a href="/contact.html">تماس با ما</a></li>
+                    <li><a href="/team.html">اعضای تیم</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="/login.html" class="btn-login">ورود</a>
+                <a href="/register.html" class="btn-register">ثبت نام</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="product-detail">
+            <div class="product-image-large">
+                تصویر محصول
+            </div>
+            <div class="product-info-large">
+                <h1>آناتومی گری</h1>
+                <p class="product-meta">نویسنده: هنری گری | ناشر: انتشارات پزشکی</p>
+                <p class="product-price-large">۴۵۰,۰۰۰ تومان</p>
+                <div class="product-description">
+                    <p>کتاب آناتومی گری یکی از معتبرترین منابع آموزشی آناتومی در جهان است. این کتاب با تصاویر دقیق و توضیحات کامل، برای دانشجویان پزشکی و علاقه‌مندان به آناتومی انسان بسیار مفید است.</p>
+                    <p>ویژگی‌ها:</p>
+                    <ul>
+                        <li>بیش از ۱۰۰۰ تصویر رنگی</li>
+                        <li>توضیحات کامل و دقیق</li>
+                        <li>مناسب برای دانشجویان پزشکی</li>
+                        <li>ترجمه روان و قابل فهم</li>
+                    </ul>
+                </div>
+                <button class="btn-add-cart" onclick="alert('به سبد خرید اضافه شد!')">افزودن به سبد خرید</button>
+            </div>
+        </div>
+        <div class="container">
+            <a href="/store.html" class="back-link">← بازگشت به فروشگاه</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>تمامی حقوق برای نرسیمد محفوظ است © ۱۴۰۳</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

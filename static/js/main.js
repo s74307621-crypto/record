@@ -1,79 +1,53 @@
-// Mobile menu toggle
+// جاوااسکریپت ساده برای سایت نرسیمد
+
+// وقتی صفحه لود شد
 document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
+    console.log('سایت نرسیمد بارگذاری شد');
     
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-        });
-    }
+    // اضافه کردن کلاس active به منوی فعلی
+    var currentPage = window.location.pathname;
+    var navLinks = document.querySelectorAll('nav a');
     
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
+    navLinks.forEach(function(link) {
+        if (link.getAttribute('href') === currentPage) {
+            link.style.opacity = '0.7';
+        }
     });
     
-    // Form validation
-    const forms = document.querySelectorAll('form[data-validate]');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = 'var(--danger-color)';
-                } else {
-                    field.style.borderColor = 'var(--border-color)';
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('لطفاً تمام فیلدهای الزامی را پر کنید');
-            }
+    // انیمیشن ساده برای کارت‌ها
+    var cards = document.querySelectorAll('.service-card, .article-card');
+    cards.forEach(function(card) {
+        card.addEventListener('mouseenter', function() {
+            console.log('کارت هاور شد');
         });
     });
-    
-    // Search functionality
-    const searchInput = document.querySelector('#search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
-            
-            cards.forEach(card => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                if (title.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    }
 });
 
-// Audio player for podcasts
-function togglePlay(audioId, btnId) {
-    const audio = document.getElementById(audioId);
-    const btn = document.getElementById(btnId);
+// تابع برای نمایش پیام خوش‌آمدگویی
+function showWelcomeMessage() {
+    alert('به نرسیمد خوش آمدید!');
+}
+
+// تابع برای اعتبارسنجی فرم
+function validateForm(formId) {
+    var form = document.getElementById(formId);
+    if (!form) return false;
     
-    if (audio.paused) {
-        audio.play();
-        btn.textContent = '⏸ توقف';
-    } else {
-        audio.pause();
-        btn.textContent = '▶ پخش';
+    var inputs = form.querySelectorAll('input[required], textarea[required]');
+    var isValid = true;
+    
+    inputs.forEach(function(input) {
+        if (!input.value.trim()) {
+            input.style.borderColor = 'red';
+            isValid = false;
+        } else {
+            input.style.borderColor = '#ddd';
+        }
+    });
+    
+    if (!isValid) {
+        alert('لطفا تمام فیلدهای الزامی را پر کنید');
     }
+    
+    return isValid;
 }
