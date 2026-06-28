@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل کاربری - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
+            <nav><ul class="nav-menu">
+                <li><a href="/" class="nav-link">خانه</a></li>
+                <li><a href="/shop" class="nav-link">فروشگاه</a></li>
+                <li><a href="/articles" class="nav-link">مقالات</a></li>
+            </ul></nav>
+            <div style="display:flex;align-items:center;gap:15px">
+                <div class="cart-icon-wrapper"><span class="cart-icon">🛒</span><span class="cart-badge" style="display:none">0</span></div>
+                <div class="auth-buttons"><a href="/login" class="btn btn-outline">ورود</a><a href="/register" class="btn btn-primary">ثبت نام</a></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="profile-page">
+        <div class="container">
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <div class="profile-user-card">
+                        <div class="user-avatar">{{USER_INITIAL}}</div>
+                        <h3>{{USERNAME}}</h3>
+                        <p>{{EMAIL}}</p>
+                    </div>
+                    
+                    <nav class="profile-nav">
+                        <a href="#dashboard" class="profile-nav-item active" data-tab="dashboard">📊 داشبورد</a>
+                        <a href="#orders" class="profile-nav-item" data-tab="orders">📦 سفارشات من</a>
+                        <a href="#courses" class="profile-nav-item" data-tab="courses">🎓 دوره‌های من</a>
+                        <a href="#favorites" class="profile-nav-item" data-tab="favorites">❤️ علاقه‌مندی‌ها</a>
+                        <a href="#settings" class="profile-nav-item" data-tab="settings">⚙️ تنظیمات حساب</a>
+                        <a href="#" onclick="logout()" class="profile-nav-item logout">🚪 خروج</a>
+                    </nav>
+                </aside>
+                
+                <!-- Main Content -->
+                <main class="profile-content">
+                    <!-- Dashboard Tab -->
+                    <div class="profile-tab active" id="dashboard">
+                        <h2 class="profile-title">داشبورد</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-icon">📦</span>
+                                <div class="stat-info">
+                                    <strong>{{ORDERS_COUNT}}</strong>
+                                    <span>سفارشات</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">🎓</span>
+                                <div class="stat-info">
+                                    <strong>{{COURSES_COUNT}}</strong>
+                                    <span>دوره‌ها</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-icon">❤️</span>
+                                <div class="stat-info">
+                                    <strong>{{FAVORITES_COUNT}}</strong>
+                                    <span>علاقه‌مندی‌ها</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recent-orders-preview">
+                            <h3>آخرین سفارشات</h3>
+                            <table class="simple-table">
+                                <thead><tr><th>شماره سفارش</th><th>تاریخ</th><th>مبلغ</th><th>وضعیت</th></tr></thead>
+                                <tbody id="recentOrdersBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Tab -->
+                    <div class="profile-tab" id="orders">
+                        <h2 class="profile-title">سفارشات من</h2>
+                        <div class="orders-list" id="ordersList"></div>
+                    </div>
+                    
+                    <!-- Courses Tab -->
+                    <div class="profile-tab" id="courses">
+                        <h2 class="profile-title">دوره‌های خریداری شده</h2>
+                        <div class="courses-grid" id="myCoursesGrid"></div>
+                    </div>
+                    
+                    <!-- Favorites Tab -->
+                    <div class="profile-tab" id="favorites">
+                        <h2 class="profile-title">علاقه‌مندی‌ها</h2>
+                        <div class="products-grid" id="favoritesGrid"></div>
+                    </div>
+                    
+                    <!-- Settings Tab -->
+                    <div class="profile-tab" id="settings">
+                        <h2 class="profile-title">تنظیمات حساب کاربری</h2>
+                        
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>نام کاربری</label>
+                                    <input type="text" name="username" value="{{USERNAME}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>ایمیل</label>
+                                    <input type="email" name="email" value="{{EMAIL}}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>شماره تلفن</label>
+                                    <input type="tel" name="phone" value="{{PHONE}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>تاریخ تولد</label>
+                                    <input type="text" name="birth_date" value="{{BIRTH_DATE}}" placeholder="۱۳۷۰/۰۱/۰۱">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label>آدرس</label>
+                                <textarea name="address" rows="3">{{ADDRESS}}</textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                        </form>
+                        
+                        <div class="change-password-section">
+                            <h3>تغییر رمز عبور</h3>
+                            <form class="profile-form" id="passwordForm">
+                                <div class="form-group">
+                                    <label>رمز عبور فعلی</label>
+                                    <input type="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>رمز عبور جدید</label>
+                                    <input type="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>تکرار رمز عبور</label>
+                                    <input type="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline">تغییر رمز عبور</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© ۱۴۰۳ نرسیمد - تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="/static/js/main.js"></script>
+    <script>
+        // Tab switching
+        document.querySelectorAll('.profile-nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if(!this.classList.contains('logout')) {
+                    e.preventDefault();
+                    const tabId = this.dataset.tab;
+                    
+                    document.querySelectorAll('.profile-nav-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                }
+            });
+        });
+        
+        function logout() {
+            localStorage.removeItem('nursimed_user');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
