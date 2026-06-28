@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - نرسیمد</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
+            <nav><ul class="nav-menu">
+                <li><a href="/" class="nav-link">خانه</a></li>
+                <li><a href="/shop" class="nav-link">فروشگاه</a></li>
+                <li><a href="/articles" class="nav-link">مقالات</a></li>
+            </ul></nav>
+            <div style="display:flex;align-items:center;gap:15px">
+                <div class="cart-icon-wrapper"><span class="cart-icon">🛒</span><span class="cart-badge" style="display:none">0</span></div>
+                <div class="auth-buttons"><a href="/login" class="btn btn-outline">ورود</a><a href="/register" class="btn btn-primary">ثبت نام</a></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="product-detail">
+        <div class="container product-detail-container">
+            <img src="{{IMAGE_URL}}" alt="{{TITLE}}" class="product-detail-image">
+            <div class="product-detail-info">
+                <span class="product-detail-category">{{CATEGORY}}</span>
+                <h1>{{TITLE}}</h1>
+                <div class="product-detail-price">{{PRICE}} تومان</div>
+                <p class="product-detail-desc">{{DESCRIPTION}}</p>
+                <div class="product-detail-meta">
+                    <div class="meta-item"><span>📦 موجودی:</span><strong>{{STOCK}} عدد</strong></div>
+                    <div class="meta-item"><span>⭐ وضعیت:</span><strong>موجود</strong></div>
+                </div>
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="qty-btn" onclick="decreaseQty()">−</button>
+                        <span id="qty" style="min-width:40px;text-align:center;font-weight:700">1</span>
+                        <button class="qty-btn" onclick="increaseQty()">+</button>
+                    </div>
+                    <button class="btn btn-primary add-to-cart-btn" data-product-id="{{PRODUCT_ID}}" style="flex:1">
+                        🛒 افزودن به سبد خرید
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><div class="footer-bottom"><p>© ۱۴۰۳ نرسیمد</p></div></div></footer>
+    <div class="toast-container"></div>
+    <script src="/static/js/main.js"></script>
+    <script>
+        function increaseQty() { document.getElementById('qty').textContent = parseInt(document.getElementById('qty').textContent) + 1; }
+        function decreaseQty() { let q = parseInt(document.getElementById('qty').textContent); if(q > 1) document.getElementById('qty').textContent = q - 1; }
+    </script>
+</body>
+</html>
