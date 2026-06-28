@@ -1,8 +1,10 @@
-// Nursimed - کدهای جاوااسکریپت اصلی
+// Nursimed - کدهای جاوااسکریپت اصلی و حرفه‌ای
 
 // متغیرهای سراسری
 let currentUser = null;
 let cartCount = 0;
+let favoriteCount = 0;
+let darkMode = false;
 
 // اجرای کدها پس از لود شدن صفحه
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,8 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // مقداردهی اولیه برنامه
 function initApp() {
     loadUserFromStorage();
+    loadSettings();
     updateCartCount();
+    updateFavoriteCount();
     setupEventListeners();
+    initHeader();
+    initScrollAnimations();
     
     // بارگذاری داده‌ها بر اساس صفحه فعلی
     const path = window.location.pathname;
@@ -32,43 +38,111 @@ function initApp() {
         loadCart();
     } else if (path === '/admin') {
         loadAdminPanel();
+    } else if (path === '/profile') {
+        loadProfile();
     }
 }
 
-// تنظیم رویدادها
-function setupEventListeners() {
-    // فرم ورود
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-    
-    // فرم ثبت نام
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', handleRegister);
-    }
-    
-    // فرم تماس با ما
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContact);
-    }
-    
-    // دکمه افزودن به سبد
-    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
-    addToCartBtns.forEach(btn => {
-        btn.addEventListener('click', handleAddToCart);
-    });
-    
-    // کلیک روی آیکون سبد خرید
-    const cartIcon = document.querySelector('.cart-icon-wrapper');
-    if (cartIcon) {
-        cartIcon.addEventListener('click', () => {
-            window.location.href = '/cart';
+// ========== مدیریت هدر حرفه‌ای ==========
+function initHeader() {
+    // Sticky Header
+    const header = document.querySelector('.header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
         });
     }
+    
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Search Functionality
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', handleSearch);
+    }
+    
+    // Update Auth Buttons based on user status
+    updateAuthButtons();
 }
+
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (mobileMenu && mobileMenuBtn) {
+        mobileMenu.classList.toggle('active');
+        mobileMenuBtn.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    }
+}
+
+function updateAuthButtons() {
+    const authContainer = document.querySelector('.auth-buttons');
+    if (!authContainer) return;
+    
+    if (currentUser) {
+        const avatar = currentUser.username ? currentUser.username.charAt(0).toUpperCase() : '👤';
+        let adminLink = currentUser.is_admin ? `<a href="/admin" class="btn btn-outline btn-sm">پنل ادمین</a>` : '';
+        
+        authContainer.innerHTML = `
+            <div class="user-dropdown-wrapper">
+                <button class="user-avatar-btn" onclick="toggleUserDropdown()">
+                    <span class="avatar-circle">${avatar}</span>
+                    <span class="user-name-mobile">${currentUser.username}</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-header">
+                        <span class="avatar-circle large">${avatar}</span>
+                        <div class="user-info">
+                            <span class="username">${currentUser.username}</span>
+                            <span class="email">${currentUser.email}</span>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="/profile"><span class="icon">👤</span> پروفایل کاربری</a></li>
+                        <li><a href="/profile?tab=orders"><span class="icon">📦</span> سفارش‌های من</a></li>
+                        <li><a href="/profile?tab=favorites"><span class="icon">❤️</span> علاقه‌مندی‌ها</a></li>
+                        ${adminLink ? `<li><a href="/admin"><span class="icon">⚙️</span> پنل مدیریت</a></li>` : ''}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button onclick="logout()"><span class="icon">🚪</span> خروج</button></li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    } else {
+        authContainer.innerHTML = `
+            <a href="/login" class="btn btn-outline">ورود</a>
+            <a href="/register" class="btn btn-primary">ثبت نام</a>
+        `;
+    }
+}
+
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('active');
+    }
+}
+
+// بستن dropdown وقتی بیرون کلیک شود
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('userDropdown');
+    const wrapper = document.querySelector('.user-dropdown-wrapper');
+    
+    if (dropdown && wrapper && !wrapper.contains(e.target)) {
+        dropdown.classList.remove('active');
+    }
+});
 
 // ========== توابع API ==========
 
@@ -125,12 +199,33 @@ function updateAuthButtons() {
     if (!authContainer) return;
     
     if (currentUser) {
+        const avatar = currentUser.username ? currentUser.username.charAt(0).toUpperCase() : '👤';
+        let adminLink = currentUser.is_admin ? `<a href="/admin" class="btn btn-outline btn-sm">پنل ادمین</a>` : '';
+        
         authContainer.innerHTML = `
-            <span style="color: var(--primary); font-weight: 600; padding: 10px;">
-                👤 ${currentUser.username}
-            </span>
-            ${currentUser.is_admin ? `<a href="/admin" class="btn btn-outline">پنل ادمین</a>` : ''}
-            <button onclick="logout()" class="btn btn-outline">خروج</button>
+            <div class="user-dropdown-wrapper">
+                <button class="user-avatar-btn" onclick="toggleUserDropdown()">
+                    <span class="avatar-circle">${avatar}</span>
+                    <span class="user-name-mobile">${currentUser.username}</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-header">
+                        <span class="avatar-circle large">${avatar}</span>
+                        <div class="user-info">
+                            <span class="username">${currentUser.username}</span>
+                            <span class="email">${currentUser.email}</span>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="/profile"><span class="icon">👤</span> پروفایل کاربری</a></li>
+                        <li><a href="/profile?tab=orders"><span class="icon">📦</span> سفارش‌های من</a></li>
+                        <li><a href="/profile?tab=favorites"><span class="icon">❤️</span> علاقه‌مندی‌ها</a></li>
+                        ${adminLink ? `<li><a href="/admin"><span class="icon">⚙️</span> پنل مدیریت</a></li>` : ''}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button onclick="logout()"><span class="icon">🚪</span> خروج</button></li>
+                    </ul>
+                </div>
+            </div>
         `;
     } else {
         authContainer.innerHTML = `
@@ -655,3 +750,157 @@ function formatDate(dateString) {
 
 // خروجی برای دیباگ
 console.log('🏥 Nursimed App Loaded Successfully');
+
+// ========== پروفایل کاربری ==========
+
+async function loadProfile() {
+    if (!currentUser) {
+        window.location.href = '/login';
+        return;
+    }
+
+    // بارگذاری اطلاعات کاربر
+    const profileResult = await apiRequest('/api/user/profile', 'POST', { 
+        user_id: currentUser.id,
+        action: 'get'
+    });
+
+    if (profileResult.success) {
+        renderProfileInfo(profileResult.data);
+    }
+
+    // بارگذاری سفارشات
+    const ordersResult = await apiRequest('/api/user/orders', 'POST', { 
+        user_id: currentUser.id 
+    });
+
+    if (ordersResult.success) {
+        renderUserOrders(ordersResult.data);
+    }
+
+    // مدیریت تب‌ها
+    setupProfileTabs();
+}
+
+function renderProfileInfo(user) {
+    const infoContainer = document.querySelector('.profile-info-container');
+    if (!infoContainer) return;
+
+    infoContainer.innerHTML = `
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <span class="avatar-circle large">${user.username ? user.username.charAt(0).toUpperCase() : '👤'}</span>
+            </div>
+            <div class="profile-details">
+                <h3 class="profile-name">${user.username}</h3>
+                <p class="profile-email">${user.email}</p>
+            </div>
+        </div>
+        <form id="profileForm" class="profile-form">
+            <div class="form-group">
+                <label class="form-label">نام کاربری</label>
+                <input type="text" class="form-input" name="username" value="${user.username || ''}">
+            </div>
+            <div class="form-group">
+                <label class="form-label">شماره تماس</label>
+                <input type="tel" class="form-input" name="phone" value="${user.phone || ''}" placeholder="09123456789">
+            </div>
+            <div class="form-group">
+                <label class="form-label">آدرس</label>
+                <textarea class="form-input" name="address" rows="3" placeholder="آدرس کامل خود را وارد کنید">${user.address || ''}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">تاریخ تولد</label>
+                <input type="text" class="form-input" name="birth_date" value="${user.birth_date || ''}" placeholder="1370/01/01">
+            </div>
+            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+        </form>
+    `;
+
+    // اضافه کردن رویداد به فرم
+    const profileForm = document.getElementById('profileForm');
+    if (profileForm) {
+        profileForm.addEventListener('submit', handleProfileUpdate);
+    }
+}
+
+async function handleProfileUpdate(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = {
+        user_id: currentUser.id,
+        action: 'update',
+        username: formData.get('username'),
+        phone: formData.get('phone'),
+        address: formData.get('address'),
+        birth_date: formData.get('birth_date')
+    };
+
+    const result = await apiRequest('/api/user/profile', 'POST', data);
+
+    if (result.success) {
+        showToast('اطلاعات پروفایل با موفقیت به‌روزرسانی شد', 'success');
+        // به‌روزرسانی کاربر در localStorage
+        currentUser.username = data.username;
+        localStorage.setItem('nursimed_user', JSON.stringify(currentUser));
+        updateAuthButtons();
+    } else {
+        showToast(result.message, 'error');
+    }
+}
+
+function renderUserOrders(orders) {
+    const ordersContainer = document.querySelector('.user-orders-container');
+    if (!ordersContainer) return;
+
+    if (!orders || orders.length === 0) {
+        ordersContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📦</div>
+                <p>هنوز سفارشی ثبت نکرده‌اید</p>
+                <a href="/shop" class="btn btn-primary">مشاهده فروشگاه</a>
+            </div>
+        `;
+        return;
+    }
+
+    ordersContainer.innerHTML = orders.map(order => `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">سفارش #${order.id}</span>
+                <span class="order-status status-${order.status || 'pending'}">
+                    ${order.status === 'completed' ? '✅ تکمیل شده' : 
+                      order.status === 'shipped' ? '🚚 ارسال شده' : '⏳ در حال پردازش'}
+                </span>
+                <span class="order-date">${formatDate(order.created_at)}</span>
+            </div>
+            <div class="order-items">
+                ${order.items ? order.items.map(item => `
+                    <div class="order-item">
+                        <span class="item-title">${item.title}</span>
+                        <span class="item-quantity">× ${item.quantity}</span>
+                        <span class="item-price">${parseFloat(item.price).toLocaleString()} تومان</span>
+                    </div>
+                `).join('') : ''}
+            </div>
+            <div class="order-footer">
+                <span class="order-total">جمع کل: ${parseFloat(order.total_amount || 0).toLocaleString()} تومان</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function setupProfileTabs() {
+    const tabs = document.querySelectorAll('.profile-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const section = tab.dataset.section;
+            document.querySelectorAll('.profile-section').forEach(s => s.style.display = 'none');
+            document.getElementById(section).style.display = 'block';
+        });
+    });
+}
