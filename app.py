@@ -105,6 +105,16 @@ class NursimedHandler(BaseHTTPRequestHandler):
             self.handle_admin_products(data)
         elif path == '/api/admin/articles':
             self.handle_admin_articles(data)
+        elif path == '/api/product/rate':
+            self.handle_product_rate(data)
+        elif path == '/api/product/favorite':
+            self.handle_product_favorite(data)
+        elif path == '/api/user/profile':
+            self.handle_user_profile(data)
+        elif path == '/api/user/orders':
+            self.handle_user_orders(data)
+        elif path == '/api/article/rate':
+            self.handle_article_rate(data)
         else:
             self.send_json_response({'success': False, 'message': 'API not found'})
     
@@ -645,6 +655,172 @@ class NursimedHandler(BaseHTTPRequestHandler):
                 conn.commit()
                 self.send_json_response({'success': True, 'message': 'مقاله حذف شد'})
         
+        except Exception as e:
+            self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
+        finally:
+            cur.close()
+            conn.close()
+
+    def handle_product_rate(self, data):
+        """امتیازدهی به محصول"""
+        user_id = data.get('user_id')
+        product_id = data.get('product_id')
+        rating = data.get('rating', 5)
+        
+        if not user_id or not product_id:
+            self.send_json_response({'success': False, 'message': 'اطلاعات ناقص است'})
+            return
+        
+        conn = get_db_connection()
+        if not conn:
+            self.send_json_response({'success': False, 'message': 'خطا در اتصال به دیتابیس'})
+            return
+        
+        cur = conn.cursor()
+        try:
+            cur.execute("""
+                INSERT INTO product_ratings (user_id, product_id, rating)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (user_id, product_id) 
+                DO UPDATE SET rating = %s
+            """, (user_id, product_id, rating, rating))
+            conn.commit()
+            self.send_json_response({'success': True, 'message': 'امتیاز شما ثبت شد'})
+        except Exception as e:
+            self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
+        finally:
+            cur.close()
+            conn.close()
+
+    def handle_product_favorite(self, data):
+        """افزودن/حذف از علاقه‌مندی‌ها"""
+        user_id = data.get('user_id')
+        product_id = data.get('product_id')
+        action = data.get('action', 'add')
+        
+        if not user_id or not product_id:
+            self.send_json_response({'success': False, 'message': 'اطلاعات ناقص است'})
+            return
+        
+        conn = get_db_connection()
+        if not conn:
+            self.send_json_response({'success': False, 'message': 'خطا در اتصال به دیتابیس'})
+            return
+        
+        cur = conn.cursor()
+        try:
+            if action == 'add':
+                cur.execute("""
+                    INSERT INTO favorites (user_id, product_id)
+                    VALUES (%s, %s)
+                    ON CONFLICT DO NOTHING
+                """, (user_id, product_id))
+            else:
+                cur.execute("DELETE FROM favorites WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+            conn.commit()
+            self.send_json_response({'success': True, 'message': 'عملیات با موفقیت انجام شد'})
+        except Exception as e:
+            self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
+        finally:
+            cur.close()
+            conn.close()
+
+    def handle_user_profile(self, data):
+        """دریافت/به‌روزرسانی پروفایل کاربر"""
+        user_id = data.get('user_id')
+        
+        if not user_id:
+            self.send_json_response({'success': False, 'message': 'کاربر وارد نشده است'})
+            return
+        
+        conn = get_db_connection()
+        if not conn:
+            self.send_json_response({'success': False, 'message': 'خطا در اتصال به دیتابیس'})
+            return
+        
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            if data.get('action') == 'update':
+                cur.execute("""
+                    UPDATE users 
+                    SET username = %s, phone = %s, address = %s, birth_date = %s
+                    WHERE id = %s
+                """, (data.get('username'), data.get('phone'), data.get('address'), 
+                      data.get('birth_date'), user_id))
+                conn.commit()
+            
+            cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+            user = cur.fetchone()
+            
+            if user:
+                user.pop('password', None)
+                self.send_json_response({'success': True, 'data': user})
+            else:
+                self.send_json_response({'success': False, 'message': 'کاربر یافت نشد'})
+        except Exception as e:
+            self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
+        finally:
+            cur.close()
+            conn.close()
+
+    def handle_user_orders(self, data):
+        """دریافت سفارشات کاربر"""
+        user_id = data.get('user_id')
+        
+        if not user_id:
+            self.send_json_response({'success': False, 'message': 'کاربر وارد نشده است'})
+            return
+        
+        conn = get_db_connection()
+        if not conn:
+            self.send_json_response({'success': False, 'message': 'خطا در اتصال به دیتابیس'})
+            return
+        
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            cur.execute("""
+                SELECT o.*, 
+                    json_agg(json_build_object('product_id', oi.product_id, 'title', p.title, 'quantity', oi.quantity, 'price', oi.price)) as items
+                FROM orders o
+                LEFT JOIN order_items oi ON o.id = oi.order_id
+                LEFT JOIN products p ON oi.product_id = p.id
+                WHERE o.user_id = %s
+                GROUP BY o.id
+                ORDER BY o.created_at DESC
+            """, (user_id,))
+            orders = cur.fetchall()
+            self.send_json_response({'success': True, 'data': orders})
+        except Exception as e:
+            self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
+        finally:
+            cur.close()
+            conn.close()
+
+    def handle_article_rate(self, data):
+        """امتیازدهی به مقاله"""
+        user_id = data.get('user_id')
+        article_id = data.get('article_id')
+        rating = data.get('rating', 5)
+        
+        if not user_id or not article_id:
+            self.send_json_response({'success': False, 'message': 'اطلاعات ناقص است'})
+            return
+        
+        conn = get_db_connection()
+        if not conn:
+            self.send_json_response({'success': False, 'message': 'خطا در اتصال به دیتابیس'})
+            return
+        
+        cur = conn.cursor()
+        try:
+            cur.execute("""
+                INSERT INTO article_ratings (user_id, article_id, rating)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (user_id, article_id) 
+                DO UPDATE SET rating = %s
+            """, (user_id, article_id, rating, rating))
+            conn.commit()
+            self.send_json_response({'success': True, 'message': 'امتیاز شما ثبت شد'})
         except Exception as e:
             self.send_json_response({'success': False, 'message': f'خطا: {str(e)}'})
         finally:
