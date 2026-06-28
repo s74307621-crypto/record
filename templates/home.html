@@ -16,140 +16,183 @@
                 <span>نرسیمد</span>
             </a>
             
-            <nav>
+            <nav class="main-nav">
                 <ul class="nav-menu">
                     <li><a href="/" class="nav-link active">خانه</a></li>
                     <li><a href="/shop" class="nav-link">فروشگاه</a></li>
                     <li><a href="/articles" class="nav-link">مقالات</a></li>
                     <li><a href="/about" class="nav-link">درباره ما</a></li>
                     <li><a href="/contact" class="nav-link">تماس با ما</a></li>
-                    <li><a href="/team" class="nav-link">اعضای تیم</a></li>
                 </ul>
             </nav>
             
-            <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="header-actions">
                 <div class="cart-icon-wrapper" onclick="window.location.href='/cart'">
                     <span class="cart-icon">🛒</span>
                     <span class="cart-badge" style="display: none;">0</span>
                 </div>
                 
-                <div class="auth-buttons">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                
+                <div class="auth-buttons desktop-auth">
                     <a href="/login" class="btn btn-outline">ورود</a>
                     <a href="/register" class="btn btn-primary">ثبت نام</a>
                 </div>
             </div>
         </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-menu">
+                <li><a href="/">خانه</a></li>
+                <li><a href="/shop">فروشگاه</a></li>
+                <li><a href="/articles">مقالات</a></li>
+                <li><a href="/about">درباره ما</a></li>
+                <li><a href="/contact">تماس با ما</a></li>
+                <li><a href="/login">ورود</a></li>
+                <li><a href="/register">ثبت نام</a></li>
+            </ul>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero hero-home">
+        <div class="hero-bg-pattern"></div>
         <div class="container hero-content">
-            <h1 class="hero-title">🏥 نرسیمد - مرجع تخصصی آموزش پزشکی</h1>
+            <div class="hero-badge">✨ پلتفرم شماره ۱ آموزش پزشکی در ایران</div>
+            <h1 class="hero-title">نرسیمد - مرجع تخصصی<br><span class="highlight">آموزش پزشکی</span></h1>
             <p class="hero-subtitle">
-                دسترسی آسان به آموزش‌های تخصصی پزشکی، دوره‌های آموزشی، کتاب‌ها و پادکست‌های پزشکی
-                برای دانشجویان، پزشکان و علاقه‌مندان به حوزه سلامت
+                دسترسی آسان به معتبرترین منابع آموزشی پزشکی، دوره‌های تخصصی، 
+                کتاب‌های مرجع و پادکست‌های علمی برای دانشجویان، پزشکان و علاقه‌مندان به حوزه سلامت
             </p>
             <div class="hero-buttons">
-                <a href="/shop" class="btn btn-white">📚 مشاهده فروشگاه</a>
-                <a href="/articles" class="btn btn-transparent">📰 مقالات آموزشی</a>
+                <a href="/shop" class="btn btn-white btn-lg">📚 مشاهده فروشگاه</a>
+                <a href="/articles" class="btn btn-transparent btn-lg">📰 مقالات آموزشی</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">+۵۰۰۰</span>
+                    <span class="stat-label">دانشجوی فعال</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">+۲۰۰</span>
+                    <span class="stat-label">منبع آموزشی</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">+۵۰</span>
+                    <span class="stat-label">استاد متخصص</span>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features section-padding">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">چرا نرسیمد؟</h2>
-                <p class="section-subtitle">امکانات ویژه‌ای که ما را از دیگران متمایز می‌کند</p>
+                <span class="section-badge">چرا نرسیمد؟</span>
+                <h2 class="section-title">امکانات ویژه‌ای که ما را متمایز می‌کند</h2>
+                <p class="section-subtitle">تجربه‌ای متفاوت از آموزش پزشکی با امکانات مدرن و حرفه‌ای</p>
             </div>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card feature-card-lg">
                     <div class="feature-icon">📚</div>
                     <h3 class="feature-title">کتاب‌های تخصصی</h3>
-                    <p class="feature-desc">مجموعه‌ای کامل از کتاب‌های مرجع پزشکی برای دانشجویان و متخصصین</p>
+                    <p class="feature-desc">مجموعه‌ای کامل از معتبرترین کتاب‌های مرجع پزشکی دنیا مانند گری، گایتون، هاریسون و...</p>
+                    <ul class="feature-list">
+                        <li>✓ ترجمه روان و تخصصی</li>
+                        <li>✓ تصاویر با کیفیت بالا</li>
+                        <li>✓ آپدیت مداوم</li>
+                    </ul>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🎓</div>
                     <h3 class="feature-title">دوره‌های آموزشی</h3>
-                    <p class="feature-desc">دوره‌های ویدیویی و آنلاین با پشتیبانی اساتید مجرب</p>
+                    <p class="feature-desc">دوره‌های ویدیویی با تدریس اساتید مجرب دانشگاه‌های علوم پزشکی</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🎙️</div>
                     <h3 class="feature-title">پادکست‌های پزشکی</h3>
-                    <p class="feature-desc">شنیدن مطالب آموزشی در هر زمان و مکان</p>
+                    <p class="feature-desc">شنیدن مطالب آموزشی در هر زمان و مکان، حتی هنگام رفت‌وآمد</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">📝</div>
                     <h3 class="feature-title">مقالات علمی</h3>
-                    <p class="feature-desc">آخرین یافته‌های پزشکی و مقالات مروری</p>
+                    <p class="feature-desc">آخرین یافته‌های پزشکی و مقالات مروری به زبان ساده</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">💡</div>
                     <h3 class="feature-title">پشتیبانی هوشمند</h3>
-                    <p class="feature-desc">پاسخگویی سریع به سوالات شما توسط متخصصین</p>
+                    <p class="feature-desc">پاسخگویی سریع به سوالات شما توسط تیم متخصصین</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">♾️</div>
                     <h3 class="feature-title">دسترسی دائمی</h3>
-                    <p class="feature-desc">دسترسی همیشگی به محتوای خریداری شده</p>
+                    <p class="feature-desc">دسترسی همیشگی به محتوای خریداری شده بدون محدودیت زمانی</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Featured Products -->
-    <section class="products-section">
+    <section class="products-section section-padding bg-light">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">محصولات ویژه</h2>
-                <p class="section-subtitle">برگزیده‌ترین کتاب‌های پزشکی</p>
+                <span class="section-badge">فروشگاه</span>
+                <h2 class="section-title">محصولات پرفروش</h2>
+                <p class="section-subtitle">محبوب‌ترین کتاب‌های پزشکی среди دانشجویان و پزشکان</p>
             </div>
             
             <div class="products-grid featured-products-grid">
                 <!-- محصولات از طریق جاوااسکریپت بارگذاری می‌شوند -->
             </div>
             
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="/shop" class="btn btn-primary">مشاهده همه محصولات →</a>
+            <div class="section-cta">
+                <a href="/shop" class="btn btn-primary btn-lg">مشاهده همه محصولات →</a>
             </div>
         </div>
     </section>
 
     <!-- Recent Articles -->
-    <section class="articles-section">
+    <section class="articles-section section-padding">
         <div class="container">
             <div class="section-header">
+                <span class="section-badge">بلاگ</span>
                 <h2 class="section-title">آخرین مقالات</h2>
-                <p class="section-subtitle">به‌روزترین مطالب علمی و آموزشی</p>
+                <p class="section-subtitle">به‌روزترین مطالب علمی و آموزشی در حوزه پزشکی</p>
             </div>
             
             <div class="articles-grid recent-articles-grid">
                 <!-- مقالات از طریق جاوااسکریپت بارگذاری می‌شوند -->
             </div>
             
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="/articles" class="btn btn-primary">مشاهده همه مقالات →</a>
+            <div class="section-cta">
+                <a href="/articles" class="btn btn-primary btn-lg">مشاهده همه مقالات →</a>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-        <div class="container hero-content">
-            <h2 class="hero-title">همین امروز شروع کنید!</h2>
-            <p class="hero-subtitle">
-                به جمع هزاران دانشجوی پزشکی بپیوندید و از منابع آموزشی ما استفاده کنید
-            </p>
-            <div class="hero-buttons">
-                <a href="/register" class="btn btn-white">ثبت نام رایگان</a>
-                <a href="/contact" class="btn btn-transparent">تماس با ما</a>
+    <section class="cta-section">
+        <div class="container cta-container">
+            <div class="cta-content">
+                <h2 class="cta-title">همین امروز شروع کنید!</h2>
+                <p class="cta-subtitle">
+                    به جمع هزاران دانشجوی پزشکی بپیوندید و از منابع آموزشی ما استفاده کنید.
+                    ثبت نام رایگان است!
+                </p>
+                <div class="cta-buttons">
+                    <a href="/register" class="btn btn-white btn-lg">ثبت نام رایگان</a>
+                    <a href="/contact" class="btn btn-outline-white btn-lg">تماس با ما</a>
+                </div>
+            </div>
+            <div class="cta-image">
+                <div class="cta-illustration">🩺</div>
             </div>
         </div>
     </section>
@@ -158,7 +201,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div>
+                <div class="footer-column">
                     <div class="footer-brand">
                         <div class="logo-icon">🏥</div>
                         <span>نرسیمد</span>
@@ -167,44 +210,46 @@
                         پلتفرم جامع آموزش پزشکی با دسترسی به دوره‌ها، کتاب‌ها و پادکست‌های تخصصی
                     </p>
                     <div class="footer-social">
-                        <a href="#" class="social-link">📱</a>
-                        <a href="#" class="social-link">📷</a>
-                        <a href="#" class="social-link">🐦</a>
-                        <a href="#" class="social-link">💼</a>
+                        <a href="#" class="social-link" title="اینستاگرام">📷</a>
+                        <a href="#" class="social-link" title="تلگرام">📱</a>
+                        <a href="#" class="social-link" title="توییتر">🐦</a>
+                        <a href="#" class="social-link" title="لینکدین">💼</a>
                     </div>
                 </div>
                 
-                <div>
+                <div class="footer-column">
                     <h4 class="footer-title">دسترسی سریع</h4>
                     <ul class="footer-links">
-                        <li><a href="/" class="footer-link">صفحه اصلی</a></li>
-                        <li><a href="/shop" class="footer-link">فروشگاه</a></li>
-                        <li><a href="/articles" class="footer-link">مقالات</a></li>
-                        <li><a href="/courses" class="footer-link">دوره‌ها</a></li>
+                        <li><a href="/">صفحه اصلی</a></li>
+                        <li><a href="/shop">فروشگاه</a></li>
+                        <li><a href="/articles">مقالات</a></li>
+                        <li><a href="/courses">دوره‌ها</a></li>
                     </ul>
                 </div>
                 
-                <div>
+                <div class="footer-column">
                     <h4 class="footer-title">پشتیبانی</h4>
                     <ul class="footer-links">
-                        <li><a href="/contact" class="footer-link">تماس با ما</a></li>
-                        <li><a href="/about" class="footer-link">درباره ما</a></li>
-                        <li><a href="/team" class="footer-link">اعضای تیم</a></li>
+                        <li><a href="/contact">تماس با ما</a></li>
+                        <li><a href="/about">درباره ما</a></li>
+                        <li><a href="/faq">سوالات متداول</a></li>
+                        <li><a href="/privacy">حریم خصوصی</a></li>
                     </ul>
                 </div>
                 
-                <div>
+                <div class="footer-column">
                     <h4 class="footer-title">اطلاعات تماس</h4>
-                    <ul class="footer-links">
-                        <li class="footer-link">📍 تهران، ایران</li>
-                        <li class="footer-link">📧 info@nursimed.ir</li>
-                        <li class="footer-link">📞 ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                    <ul class="footer-links contact-info">
+                        <li>📍 تهران، ایران</li>
+                        <li>📧 info@nursimed.ir</li>
+                        <li>📞 ۰۲۱-۱۲۳۴۵۶۷۸</li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <p>© ۱۴۰۳ نرسیمد - تمامی حقوق محفوظ است.</p>
+                <p class="footer-developed">طراحی و توسعه با ❤️</p>
             </div>
         </div>
     </footer>

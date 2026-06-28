@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container nav-container">
             <a href="/" class="logo"><div class="logo-icon">🏥</div><span>نرسیمد</span></a>
@@ -22,38 +23,171 @@
         </div>
     </header>
 
-    <section class="product-detail">
-        <div class="container product-detail-container">
-            <img src="{{IMAGE_URL}}" alt="{{TITLE}}" class="product-detail-image">
-            <div class="product-detail-info">
-                <span class="product-detail-category">{{CATEGORY}}</span>
-                <h1>{{TITLE}}</h1>
-                <div class="product-detail-price">{{PRICE}} تومان</div>
-                <p class="product-detail-desc">{{DESCRIPTION}}</p>
-                <div class="product-detail-meta">
-                    <div class="meta-item"><span>📦 موجودی:</span><strong>{{STOCK}} عدد</strong></div>
-                    <div class="meta-item"><span>⭐ وضعیت:</span><strong>موجود</strong></div>
-                </div>
-                <div class="product-actions">
-                    <div class="quantity-selector">
-                        <button class="qty-btn" onclick="decreaseQty()">−</button>
-                        <span id="qty" style="min-width:40px;text-align:center;font-weight:700">1</span>
-                        <button class="qty-btn" onclick="increaseQty()">+</button>
+    <section class="product-detail-page">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="/">خانه</a> / 
+                <a href="/shop">فروشگاه</a> / 
+                <span>{{TITLE}}</span>
+            </nav>
+            
+            <div class="product-detail-wrapper">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="{{IMAGE_URL}}" alt="{{TITLE}}" id="mainImage">
                     </div>
-                    <button class="btn btn-primary add-to-cart-btn" data-product-id="{{PRODUCT_ID}}" style="flex:1">
-                        🛒 افزودن به سبد خرید
-                    </button>
+                    <div class="thumbnail-list">
+                        <img src="{{IMAGE_URL}}" alt="" class="thumbnail active" onclick="changeImage(this.src)">
+                    </div>
                 </div>
+                
+                <div class="product-info-panel">
+                    <span class="product-category-badge">{{CATEGORY}}</span>
+                    <h1 class="product-title-main">{{TITLE}}</h1>
+                    
+                    <div class="product-rating-block">
+                        <div class="stars-display" data-rating="{{RATING}}">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">☆</span>
+                        </div>
+                        <span class="rating-count">({{RATING_COUNT}} نظر)</span>
+                    </div>
+                    
+                    <div class="product-price-block">
+                        <span class="current-price">{{PRICE}} تومان</span>
+                        {% if ORIGINAL_PRICE %}
+                        <span class="original-price">{{ORIGINAL_PRICE}} تومان</span>
+                        <span class="discount-badge">۱۰٪ تخفیف</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p class="product-description-full">{{DESCRIPTION}}</p>
+                    
+                    <div class="product-meta-info">
+                        <div class="meta-row">
+                            <span>📦 وضعیت موجودی:</span>
+                            <strong class="{% if STOCK > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+                                {% if STOCK > 0 %}موجود در انبار{% else %}ناموجود{% endif %}
+                            </strong>
+                        </div>
+                        <div class="meta-row">
+                            <span>🚚 زمان ارسال:</span>
+                            <strong>۲-۳ روز کاری</strong>
+                        </div>
+                        <div class="meta-row">
+                            <span>📊 تعداد موجود:</span>
+                            <strong>{{STOCK}} عدد</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions-panel">
+                        <div class="quantity-selector-modern">
+                            <label>تعداد:</label>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="decreaseQty()">−</button>
+                                <input type="text" id="qty" value="1" readonly>
+                                <button class="qty-btn" onclick="increaseQty()">+</button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-lg add-to-cart-btn" data-product-id="{{PRODUCT_ID}}" style="flex:1">
+                            🛒 افزودن به سبد خرید
+                        </button>
+                        
+                        <button class="btn btn-outline btn-icon" onclick="toggleFavorite({{PRODUCT_ID}})" title="افزودن به علاقه‌مندی‌ها">
+                            ❤️
+                        </button>
+                    </div>
+                    
+                    <div class="product-guarantees">
+                        <div class="guarantee-item">✓ ضمانت اصالت کالا</div>
+                        <div class="guarantee-item">✓ امکان بازگشت وجه</div>
+                        <div class="guarantee-item">✓ پشتیبانی ۲۴/۷</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Tabs -->
+            <div class="product-tabs-section">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="description">توضیحات</button>
+                    <button class="tab-btn" data-tab="specs">مشخصات</button>
+                    <button class="tab-btn" data-tab="reviews">نظرات کاربران</button>
+                </div>
+                
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="description">
+                        <h3>توضیحات محصول</h3>
+                        <p>{{DESCRIPTION}}</p>
+                    </div>
+                    
+                    <div class="tab-pane" id="specs">
+                        <h3>مشخصات فنی</h3>
+                        <table class="specs-table">
+                            <tr><td>دسته‌بندی</td><td>{{CATEGORY}}</td></tr>
+                            <tr><td>ناشر</td><td>انتشارات پزشکی</td></tr>
+                            <tr><td>زبان</td><td>فارسی</td></tr>
+                            <tr><td>تعداد صفحات</td><td>۸۰۰ صفحه</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="tab-pane" id="reviews">
+                        <h3>نظرات کاربران</h3>
+                        <div class="reviews-list" id="reviewsList">
+                            <!-- نظرات از طریق JS بارگذاری می‌شوند -->
+                        </div>
+                        <div class="add-review-form">
+                            <h4>ثبت نظر جدید</h4>
+                            <div class="rating-input">
+                                <span>امتیاز شما:</span>
+                                <div class="star-rating-input">
+                                    <span data-value="1">★</span>
+                                    <span data-value="2">★</span>
+                                    <span data-value="3">★</span>
+                                    <span data-value="4">★</span>
+                                    <span data-value="5">★</span>
+                                </div>
+                            </div>
+                            <textarea placeholder="نظر خود را بنویسید..." rows="4"></textarea>
+                            <button class="btn btn-primary">ثبت نظر</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Products -->
+            <div class="related-products">
+                <h3 class="section-subtitle">محصولات مرتبط</h3>
+                <div class="products-grid" id="relatedProducts"></div>
             </div>
         </div>
     </section>
 
-    <footer class="footer"><div class="container"><div class="footer-bottom"><p>© ۱۴۰۳ نرسیمد</p></div></div></footer>
-    <div class="toast-container"></div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© ۱۴۰۳ نرسیمد - تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+    
     <script src="/static/js/main.js"></script>
     <script>
-        function increaseQty() { document.getElementById('qty').textContent = parseInt(document.getElementById('qty').textContent) + 1; }
-        function decreaseQty() { let q = parseInt(document.getElementById('qty').textContent); if(q > 1) document.getElementById('qty').textContent = q - 1; }
+        function increaseQty() { 
+            const input = document.getElementById('qty');
+            input.value = parseInt(input.value) + 1; 
+        }
+        function decreaseQty() { 
+            const input = document.getElementById('qty');
+            const val = parseInt(input.value);
+            if(val > 1) input.value = val - 1; 
+        }
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+        function toggleFavorite(productId) {
+            alert('به علاقه‌مندی‌ها اضافه شد!');
+        }
     </script>
 </body>
 </html>
